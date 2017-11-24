@@ -11,6 +11,7 @@ $current_path = trim(isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO']:'');
 if (substr($current_path,0,1) == '/') $current_path = substr($current_path,1);
 if (substr($current_path,-1,1) == '/') $current_path = substr($current_path,0,-1);
 
+ob_start();
 $filename = $path_src.$current_path.'.route.php';
 if ($current_path == ''){
     require $path_src.'default.route.php';    
@@ -21,6 +22,10 @@ else if (file_exists($filename)){
 else {
     require $path_src.'404.route.php';
 }
+$page = ob_get_contents();
+ob_end_clean();
+require '../src/layouts/general.inc.php'; 
+
 
 function l($name,$path){
     echo '<a href="'.$path.'">'.$name.'</a>';
