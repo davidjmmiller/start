@@ -289,3 +289,12 @@ textarea {
         page-break-after: avoid;
     }
 }
+
+
+body { 
+    background-color: #333;
+}
+
+.container {
+    background-color: white;
+}
