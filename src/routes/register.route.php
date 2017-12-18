@@ -29,19 +29,39 @@ $t = array(
         'es' => 'Contraseña'
     ),
 );
+$form_sent = $_SERVER['REQUEST_METHOD'] == 'POST';
+
+if ($form_sent){
+
+    // Getting all variables
+    $f_firstname = $_POST['firstname'];
+    $f_lastname = $_POST['lastname'];
+    $f_address = $_POST['address'];
+    $f_login = $_POST['login'];
+    $f_password = $_POST['password'];
+
+    // Validation
+    if (trim($f_firstname == '')){
+        $invalid = true;
+        $form_errors['firstname'] = t('campo_requerido');
+    }
+
+}
+
+
 ?>
 <div class="container registration-form">
     <form method="post" action="<?php echo htmlentities($_SERVER['PHP_SELF']);?>">
         <fieldset>
             <legend><?php t('personalinfo');?></legend>
             <div class="frm-item">
-                <label for="frm-firstname"><?php t('firstname');?><label><input id="frm-firstname" type="text" name="name">
+                <label for="frm-firstname"><?php t('firstname');?><label><input <?php if($form_sent){ echo 'value="'.$f_firstname.'"'; } ?> id="frm-firstname" type="text" name="firstname">
             </div>
             <div class="frm-item">
-                <label for="frm-lastname"><?php t('lastname');?><label><input id="frm-lastname" type="text" name="lastname">
+                <label for="frm-lastname"><?php t('lastname');?><label><input <?php if($form_sent){ echo 'value="'.$f_lastname.'"'; } ?> id="frm-lastname" type="text" name="lastname">
             </div>
             <div class="frm-item">
-                <label for="frm-addres"><?php t('address');?><label><textarea id="frm-address" name="address"></textarea>
+                <label for="frm-address"><?php t('address');?><label><textarea  id="frm-address" name="address"><?php if($form_sent){ echo $f_address; } ?></textarea>
             </div>
         </fieldset>
         <fieldset>
