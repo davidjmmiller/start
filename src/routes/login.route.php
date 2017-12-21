@@ -1,5 +1,10 @@
 <?php
 
+// If session was initiated go to the main page
+if (isset($_SESSION['session_active']) && $_SESSION['session_active'] == 1){
+    header('Location: /');
+}
+
 $message = array();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
@@ -16,33 +21,37 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     
     if ($result->num_rows > 0) {
         header('Location: /');
+
+        // Registering session
+        $_SESSION['session_active'] = 1;
+
     } else {
-       $message[] = 'Username or pasword invalid';
+       $message[] = 'Username or password invalid';
     }
     $conn->close();
-        
 
 }
 
 ?>
 <div class="login">
+    <h1>Login</h1>
     <?php
-        if(count($message)>0):
-            echo '<div class="message">';
-            echo '<ul>';
-            if (is_array($message) && count($message) > 0){
-                foreach($message as $msg){
-                    echo '<li>'.$msg.'</li>';
-                }
+    if(count($message)>0):
+        echo '<div class="message">';
+        echo '<ul>';
+        if (is_array($message) && count($message) > 0){
+            foreach($message as $msg){
+                echo '<li>'.$msg.'</li>';
             }
-            echo '</ul>';
-            echo '</div>';
-        endif;
+        }
+        echo '</ul>';
+        echo '</div>';
+    endif;
     ?>
     <form method="post" action="/login">
         <label>User <input type="username" name="username"></label>
         <label>Password <input type="password" name="password"></label>
         <input class="btn btn-default" type="submit" value="Login">
     </form>
-        <p>New user <a href="/register">Register here</a></p>
+    <p>If you are a new user <a href="/register">Register here</a></p>
 </div>

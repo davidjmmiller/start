@@ -28,6 +28,11 @@ $t = array(
         'en' => 'Password',
         'es' => 'Contraseña'
     ),
+    'required' => array(
+        'en' => 'Required',
+        'es' => 'Requerido'
+    ),
+
 );
 $form_sent = $_SERVER['REQUEST_METHOD'] == 'POST';
 
@@ -43,7 +48,7 @@ if ($form_sent){
     // Validation
     if (trim($f_firstname == '')){
         $invalid = true;
-        $form_errors['firstname'] = t('campo_requerido');
+        $form_errors['firstname'] = t('required');
     }
 
 }
